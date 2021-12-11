@@ -22,6 +22,18 @@ setInterval(() => {
     emit('onClientMoneyChange', lastMoney, moneyAccount.money);
     lastMoney = moneyAccount.money;
   }
+
+  if (handObject) {
+    const playerPed = PlayerPedId();
+    const vehicle = GetVehiclePedIsIn(playerPed, false);
+    if (vehicle > 0) {
+      SetEntityVisible(handObject, false);
+    } else {
+      if (!IsEntityVisible(handObject)) {
+        SetEntityVisible(handObject, true);
+      }
+    }
+  }
 }, 1000);
 
 on('onClientMoneyChange', async (oldValue, newValue) => {
