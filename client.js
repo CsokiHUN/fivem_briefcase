@@ -1,22 +1,17 @@
-const ESX = exports.es_extended.getSharedObject();
+const QBCore = exports['qb-core'].GetCoreObject();
 
 let lastMoney = false;
 let handObject = false;
 
 setInterval(() => {
-  const PlayerData = ESX.GetPlayerData();
+  const PlayerData = QBCore.GetPlayerData();
 
   if (!PlayerData) {
     return;
   }
 
-  let moneyAccount = PlayerData.accounts.filter((element) => {
-    return element.name === 'money';
-  });
-
-  if (moneyAccount && moneyAccount.length > 0) {
-    moneyAccount = moneyAccount[0];
-  }
+  const moneyAccount = PlayerData?.money["money"]
+  if (!moneyAccount) return
 
   if (!lastMoney || lastMoney != moneyAccount.money) {
     emit('onClientMoneyChange', lastMoney, moneyAccount.money);
